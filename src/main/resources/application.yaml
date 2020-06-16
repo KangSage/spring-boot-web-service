@@ -1,6 +1,8 @@
 spring:
   profiles:
     include: oauth
+  session:
+    store-type: jdbc
   jpa:
     show-sql: true
     properties:
