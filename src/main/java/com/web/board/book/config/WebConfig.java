@@ -1,6 +1,6 @@
-package com.web.board.book.domain.config;
+package com.web.board.book.config;
 
-import com.web.board.book.domain.config.auth.LoginUserArgumentResolver;
+import com.web.board.book.config.auth.LoginUserArgumentResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

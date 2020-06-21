@@ -1,4 +1,4 @@
-package com.web.board.book.domain.config.auth;
+package com.web.board.book.config.auth;
 
 import com.web.board.book.domain.user.Role;
 import lombok.RequiredArgsConstructor;

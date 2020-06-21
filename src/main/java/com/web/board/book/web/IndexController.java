@@ -1,7 +1,7 @@
 package com.web.board.book.web;
 
-import com.web.board.book.domain.config.auth.LoginUser;
-import com.web.board.book.domain.config.auth.dto.SessionUser;
+import com.web.board.book.config.auth.LoginUser;
+import com.web.board.book.config.auth.dto.SessionUser;
 import com.web.board.book.service.PostsService;
 import com.web.board.book.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;

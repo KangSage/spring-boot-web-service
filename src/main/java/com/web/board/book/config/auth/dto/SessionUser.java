@@ -1,8 +1,7 @@
-package com.web.board.book.domain.config.auth.dto;
+package com.web.board.book.config.auth.dto;
 
 import com.web.board.book.domain.user.User;
 import java.io.Serializable;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter

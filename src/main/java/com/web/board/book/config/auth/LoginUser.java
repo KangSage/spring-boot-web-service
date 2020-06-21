@@ -1,4 +1,4 @@
-package com.web.board.book.domain.config.auth;
+package com.web.board.book.config.auth;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,6 +1,6 @@
-package com.web.board.book.domain.config.auth;
+package com.web.board.book.config.auth;
 
-import com.web.board.book.domain.config.auth.dto.SessionUser;
+import com.web.board.book.config.auth.dto.SessionUser;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
