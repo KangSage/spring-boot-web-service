@@ -386,8 +386,9 @@ hs_err_pid*
 .idea/jarRepositories.xml
 .idea/misc.xml
 .idea/vcs.xml
-gradle/wrapper/gradle-wrapper.properties
+
 src/test/resources/
 
 # user custom
 application-oauth.yml
+/src/main/resources/application-oauth.yaml
