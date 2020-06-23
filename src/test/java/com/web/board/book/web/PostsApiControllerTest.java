@@ -5,6 +5,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -132,6 +133,7 @@ public class PostsApiControllerTest {
     mvc.perform(put(url)
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(new ObjectMapper().writeValueAsString(requestDto)))
+        .andDo(print())
         .andExpect(status().isOk());
 
     // then
