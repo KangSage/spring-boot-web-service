@@ -1,4 +1,7 @@
 spring:
+  devtools:
+    restart:
+      enabled: true
   profiles:
     include: oauth
   session:
@@ -22,3 +25,6 @@ spring:
     view:
       prefix: classpath:/template/
       suffix: .mustache
+logging:
+  level:
+    com.web.board.book: debug

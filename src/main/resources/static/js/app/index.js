@@ -23,6 +23,7 @@ let main = {
       author: $('#author').val(),
       content: $('#content').val()
     };
+
     $.ajax({
       type: 'POST',
       url: '/api/v1/posts',
@@ -33,7 +34,7 @@ let main = {
       alert('글이 등록되었습니다.')
       window.location.href = '/';
     }).fail(function (error) {
-      alert(JSON.stringify(error));
+      alert(error.responseJSON.message);
     })
   },
 
