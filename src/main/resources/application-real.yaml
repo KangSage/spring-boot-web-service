@@ -7,11 +7,3 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-  mustache:
-    enabled: true
-    prefix: classpath:/template/
-    suffix: .mustache
-  mvc:
-    view:
-      prefix: classpath:/template/
-      suffix: .mustache

@@ -1,9 +1,6 @@
 spring:
-  devtools:
-    restart:
-      enabled: true
   profiles:
-    include: oauth
+    include: oauth, real-db
   session:
     store-type: jdbc
   jpa:
@@ -13,18 +10,14 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         format_sql: true
         use_sql_comments: true
-#    open-in-view: false
+    open-in-view: false
   h2:
     console:
       enabled: true
-  mustache:
-    enabled: true
-    prefix: classpath:/template/
-    suffix: .mustache
-  mvc:
-    view:
-      prefix: classpath:/template/
-      suffix: .mustache
+  devtools:
+    restart:
+      quiet-period: 1ms
+      poll-interval: 1s
 logging:
   level:
     com.web.board.book: debug
