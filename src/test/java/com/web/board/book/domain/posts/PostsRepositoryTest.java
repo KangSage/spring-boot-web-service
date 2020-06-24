@@ -2,6 +2,7 @@ package com.web.board.book.domain.posts;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.web.board.book.domain.user.User;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.After;
@@ -32,6 +33,7 @@ public class PostsRepositoryTest {
         .content(content)
         .title(title)
         .author("ksage@knou.ac.kr")
+        .user(User.builder().email("ksage@knou.ac.kr").build())
         .build()
     );
 

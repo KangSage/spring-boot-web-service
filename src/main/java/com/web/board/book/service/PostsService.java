@@ -19,10 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PostsService {
   private final PostsRepository postsRepository;
+  private final UserRepository userRepository;
 
   @Transactional
-  public Long save(PostsSaveRequestDto requestDto) {
-    return postsRepository.save(requestDto.toEntity()).getId();
+  public Long save(PostsSaveRequestDto requestDto, String email) {
+    Optional<User> optionalUser = userRepository.findByEmail(email);
+    if (optionalUser.isPresent()) {
+      return postsRepository.save(requestDto.toEntity(optionalUser.get())).getId();
+    }
+    return 0L;
   }
 
   @Transactional
@@ -41,6 +46,7 @@ public class PostsService {
 
   @Transactional(readOnly = true)
   public List<PostsListResponseDto> findAllDesc() {
+
     return postsRepository
         .findAllByOrderByIdDesc()
         .stream()
