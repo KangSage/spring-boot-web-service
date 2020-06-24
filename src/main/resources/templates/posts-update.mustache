@@ -1,5 +1,10 @@
 {{>layout/header}}
-  <h1>게시글 수정</h1>
+  {{^userId}}
+    <h1>게시글 내용</h1>
+  {{/userId}}
+  {{#userId}}
+    <h1>게시글 수정</h1>
+  {{/userId}}
   <div class="col-md-4">
     <form>
       <div class="form-group">
@@ -20,11 +25,17 @@
       <div class="form-group">
         <label for="content">내용</label>
         <textarea class="form-control"
-                  id="content">{{post.content}}</textarea>
+                  id="content"
+                  {{^userId}}readonly{{/userId}}>{{post.content}}</textarea>
       </div>
     </form>
-    <a href="/" role="button" class="btn btn-secondary">취소</a>
-    <button type="button" class="btn btn-primary" id="btn-update">수정 완료</button>
-    <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+    {{^userId}}
+      <a href="/" role="button" class="btn btn-secondary">메인 페이지로</a>
+    {{/userId}}
+    {{#userId}}
+      <a href="/" role="button" class="btn btn-secondary">취소</a>
+      <button type="button" class="btn btn-primary" id="btn-update">수정 완료</button>
+      <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+    {{/userId}}
   </div>
 {{>layout/footer}}

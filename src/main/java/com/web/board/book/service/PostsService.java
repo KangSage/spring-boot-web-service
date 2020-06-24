@@ -2,11 +2,14 @@ package com.web.board.book.service;
 
 import com.web.board.book.domain.posts.Posts;
 import com.web.board.book.domain.posts.PostsRepository;
+import com.web.board.book.domain.user.User;
+import com.web.board.book.domain.user.UserRepository;
 import com.web.board.book.web.dto.PostsListResponseDto;
 import com.web.board.book.web.dto.PostsResponseDto;
 import com.web.board.book.web.dto.PostsSaveRequestDto;
 import com.web.board.book.web.dto.PostsUpdateRequestDto;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

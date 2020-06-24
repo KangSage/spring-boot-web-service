@@ -4,7 +4,6 @@ let main = {
   init : function () {
     let _this = this;
     $('#btn-save').on('click', function () {
-      console.log("1111")
       _this.save();
     })
 
@@ -43,9 +42,7 @@ let main = {
       title: $('#title').val(),
       content: $('#content').val()
     }
-
     let id = $('#id').val();
-
     $.ajax({
       type: 'PUT',
       url: `/api/v1/posts/${id}`,
@@ -62,7 +59,6 @@ let main = {
 
   delete : function () {
     let id = $('#id').val();
-
     $.ajax({
       type: 'DELETE',
       url: `/api/v1/posts/${id}`,
