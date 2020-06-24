@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private final CustomOAuth2UserService customOAuth2UserService;
-
+  private final CustomAccessDeniedHandler customAccessDeniedHandler;
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
@@ -23,12 +23,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           "/css/**",
           "/images/**",
           "/js/**",
-          "/h2-console/**").permitAll()
+          "/h2-console/**",
+          "/webjars/**").permitAll()
         .antMatchers("/api/v1/**").hasRole(Role.USER.name())
         .anyRequest().authenticated()
       .and()
         .exceptionHandling()
-          .accessDeniedHandler(new CustomAccessDenideHandler())
+          .accessDeniedHandler(customAccessDeniedHandler)
       .and()
         .logout()
           .logoutSuccessUrl("/")
