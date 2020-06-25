@@ -32,7 +32,7 @@ public class Posts extends BaseTimeEntity {
 
   private String author;
 
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
   private User user;
 
   @Builder
