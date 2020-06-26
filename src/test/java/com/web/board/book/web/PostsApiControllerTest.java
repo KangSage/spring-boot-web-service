@@ -12,29 +12,29 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.board.book.config.auth.dto.SessionUser;
 import com.web.board.book.domain.posts.Posts;
 import com.web.board.book.domain.posts.PostsRepository;
+import com.web.board.book.domain.user.Role;
 import com.web.board.book.domain.user.User;
+import com.web.board.book.domain.user.UserRepository;
 import com.web.board.book.web.dto.PostsSaveRequestDto;
 import com.web.board.book.web.dto.PostsUpdateRequestDto;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public class PostsApiControllerTest {
@@ -43,6 +43,7 @@ public class PostsApiControllerTest {
 
 //  @Autowired
 //  private TestRestTemplate restTemplate;
+  private MockHttpSession session = new MockHttpSession();
 
   @Autowired
   private PostsRepository postsRepository;
@@ -52,14 +53,26 @@ public class PostsApiControllerTest {
 
   private MockMvc mvc;
 
+  @Autowired
+  private UserRepository userRepository;
+
   @Before
   public void setup() {
     mvc = MockMvcBuilders
         .webAppContextSetup(context)
         .apply(springSecurity())
+        .alwaysDo(print())
         .build();
-  }
 
+    User user = userRepository.save(User.builder()
+      .name("홍길동")
+      .email("ksage@knou.ac.kr")
+      .role(Role.USER)
+      .picture("")
+      .build());
+
+    session.setAttribute("user", new SessionUser(user));
+  }
 
   @After
   public void tearDown() throws Exception {
@@ -90,6 +103,8 @@ public class PostsApiControllerTest {
 
     // use mvc when
     mvc.perform(post(url)
+        .session(session)
+//        .sessionAttr("user", user)
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(new ObjectMapper().writeValueAsString(requestDto)))
         .andDo(print())
@@ -104,8 +119,8 @@ public class PostsApiControllerTest {
     assertThat(all.get(0).getContent()).isEqualTo(content);
   }
 
-//  @Test
-//  @WithMockUser(roles = "USER")
+  @Test
+  @WithMockUser(roles = "USER")
   public void Posts_수정된다() throws Exception {
     // given
     Posts savedPosts = postsRepository.save(Posts.builder()
