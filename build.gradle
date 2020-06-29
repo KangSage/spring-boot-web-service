@@ -56,8 +56,6 @@ test {
     }
 }
 
-//task build()
-
 task deleteOldJarFiles(type: Delete) {
     delete 'build', '*.log'
 }
