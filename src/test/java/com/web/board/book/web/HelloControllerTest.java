@@ -2,6 +2,7 @@ package com.web.board.book.web;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,6 +32,7 @@ public class HelloControllerTest {
   public void hello가_리턴된다() throws Exception {
     String hello = "hello";
     mvc.perform(get("/hello"))
+        .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string(hello));
 
@@ -48,6 +50,7 @@ public class HelloControllerTest {
         .param("amount", String.valueOf(amount))
     )
       .andExpect(status().isOk())
+        .andDo(print())
         .andExpect(jsonPath("$.name", is(name)))
         .andExpect(jsonPath("$.amount", is(amount)));
   }

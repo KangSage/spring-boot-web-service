@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.7.RELEASE'
+        springBootVersion = '2.2.8.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -18,7 +18,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group 'com.web.board'
-//version '1.0-SNAPSHOT'
+version getDate()
 sourceCompatibility = 1.8
 
 repositories {
@@ -38,7 +38,30 @@ dependencies {
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.webjars:jquery:3.5.1')
     compile('org.webjars:bootstrap:4.5.0')
-    testCompile('com.h2database:h2')
+    // 1.4.200 최신 h2에서 오류가 있어서 명시적으로 1.4.199 사용
+    testCompile('com.h2database:h2:1.4.199')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile("org.springframework.security:spring-security-test")
+}
+
+test {
+    testLogging {
+        // test jvm의 standard out and standard error을 console에 출력한다.
+
+        showStandardStreams = true
+        showCauses = true
+        showExceptions = true
+        showStackTraces = true
+        exceptionFormat = 'full'
+    }
+}
+
+//task build()
+
+task deleteOldJarFiles(type: Delete) {
+    delete 'build', '*.log'
+}
+
+static def getDate() {
+    return new Date().format('yyyy-MM-dd-HH:mm:ss')
 }

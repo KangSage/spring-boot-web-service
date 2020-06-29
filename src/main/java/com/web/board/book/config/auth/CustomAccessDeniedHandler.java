@@ -20,6 +20,8 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
       HttpServletResponse response,
       AccessDeniedException accessDeniedException)
       throws IOException, ServletException {
+
+    log.error("권한 없는 접근 시도: {}", accessDeniedException.toString());
     response.sendError(HttpStatus.FORBIDDEN.value(),
         "권한이 없습니다. 관리자에게 문의하세요!");
   }

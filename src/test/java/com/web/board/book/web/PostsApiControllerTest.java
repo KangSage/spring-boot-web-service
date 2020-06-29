@@ -43,7 +43,7 @@ public class PostsApiControllerTest {
 
 //  @Autowired
 //  private TestRestTemplate restTemplate;
-  private MockHttpSession session = new MockHttpSession();
+  private final MockHttpSession session = new MockHttpSession();
 
   @Autowired
   private PostsRepository postsRepository;
@@ -63,25 +63,27 @@ public class PostsApiControllerTest {
         .apply(springSecurity())
         .alwaysDo(print())
         .build();
-
-    User user = userRepository.save(User.builder()
-      .name("홍길동")
-      .email("ksage@knou.ac.kr")
-      .role(Role.USER)
-      .picture("")
-      .build());
-
-    session.setAttribute("user", new SessionUser(user));
   }
 
   @After
   public void tearDown() throws Exception {
     postsRepository.deleteAll();
+    userRepository.deleteAll();
   }
 
   @Test
   @WithMockUser(roles = "USER")
   public void Posts_등록된다() throws Exception {
+
+    User user = userRepository.save(User.builder()
+        .name("홍길동")
+        .email("ksage@knou.ac.kr")
+        .role(Role.USER)
+        .picture("")
+        .build());
+
+    session.setAttribute("user", new SessionUser(user));
+
     // given
     String title = "title";
     String content = "content";
@@ -97,22 +99,13 @@ public class PostsApiControllerTest {
         .append("/api/v1/posts")
         .toString();
 
-    // when
-//    ResponseEntity<Long> responseEntity =
-//        restTemplate.postForEntity(url, requestDto, Long.class);
-
     // use mvc when
     mvc.perform(post(url)
         .session(session)
-//        .sessionAttr("user", user)
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(new ObjectMapper().writeValueAsString(requestDto)))
         .andDo(print())
         .andExpect(status().isOk());
-
-    // then
-//    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-//    assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
     List<Posts> all = postsRepository.findAll();
     assertThat(all.get(0).getTitle()).isEqualTo(title);
@@ -141,13 +134,6 @@ public class PostsApiControllerTest {
 
     String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
 
-//    HttpEntity<PostsUpdateRequestDto> requestEntity =
-//        new HttpEntity<>(requestDto);
-//
-    // when
-//    ResponseEntity<Long> responseEntity =
-//        restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
-
     // use mvc when
     mvc.perform(put(url)
       .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -155,13 +141,8 @@ public class PostsApiControllerTest {
         .andDo(print())
         .andExpect(status().isOk());
 
-    // then
-//    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-//    assertThat(responseEntity.getBody()).isGreaterThan(0L);
-
     List<Posts> all = postsRepository.findAll();
     assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
     assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
-
   }
 }

@@ -25,11 +25,6 @@ public class PostsRepositoryTest {
   @Autowired
   UserRepository userRepository;
 
-  @After
-  public void cleanup() {
-    postsRepository.deleteAll();
-  }
-
   @Before
   public void signupUser() {
     userRepository.save(User.builder()
@@ -37,6 +32,12 @@ public class PostsRepositoryTest {
         .role(Role.USER)
         .email("ksage@knou.ac.kr")
         .build());
+  }
+
+  @After
+  public void cleanup() {
+    postsRepository.deleteAll();
+    userRepository.deleteAll();
   }
 
   @Test
@@ -79,6 +80,7 @@ public class PostsRepositoryTest {
 
     // then
     Posts posts = postsList.get(0);
+
     System.out.println(">>>>>>> createDAte=" + posts.getCreatedDate() +
         ", modifiedDate=" + posts.getModifiedDate());
 
