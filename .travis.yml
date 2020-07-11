@@ -1,6 +1,7 @@
 language: java
 jdk:
   - openjdk8
+
 branches:
   only:
     - master
@@ -10,7 +11,24 @@ cache:
   directories:
     - '$Home/.m2/repository'
     - '$Home/.gradle'
+
 script: "./gradlew clean build"
+
+before_deploy:
+  - zip -r spring-boot-web-service *
+  - mkdir -p deploy
+  - mv spring-boot-web-service.zip deploy/spring-boot-web-service.zip
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: spring-web-service-build
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private # zip파일 접근을 private으로
+    local_dir: deploy
+    wait-until-deployed: true
 
 # CI 실행 완료 시 메일로 알람
 notifications:
