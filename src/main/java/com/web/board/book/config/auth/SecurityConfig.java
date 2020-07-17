@@ -24,7 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           "/images/**",
           "/js/**",
           "/h2-console/**",
-          "/webjars/**").permitAll()
+          "/webjars/**",
+          "/profile").permitAll()
         .antMatchers("/api/v1/**").hasRole(Role.USER.name())
         .anyRequest().authenticated()
       .and()
